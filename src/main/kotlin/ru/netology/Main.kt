@@ -12,7 +12,7 @@ fun main() {
         if (isOverLimit(transferSum, transferSumPerDay, transferSumPerMonths)) {
             println("Превышение лимита. Операция отменена")
         } else {
-            val trasferFee = calcFee(CARD_TYPE.MASTERCARD, transferSumPerMonths, transferSum)
+            val trasferFee = calcFee(CardType.MASTERCARD, transferSumPerMonths, transferSum)
             println("Комиссия за перевод: $trasferFee рублей")
 
             transferSumPerDay += transferSum
@@ -22,12 +22,12 @@ fun main() {
     }
 }
 
-fun calcFee(cardType: CARD_TYPE = CARD_TYPE.RUSWORLD, sumPerMonth: Double = 0.0, sum: Double): Int {
+fun calcFee(cardType: CardType = CardType.RUSWORLD, sumPerMonth: Double = 0.0, sum: Double): Int {
 
     val fee = when (cardType) {
-        CARD_TYPE.RUSWORLD -> sum * FEE_RUSWORLD_MIN_RATE
-        CARD_TYPE.MASTERCARD -> calcFeeMastercard(sum, sumPerMonth)
-        CARD_TYPE.VISA ->
+        CardType.RUSWORLD -> sum * FEE_RUSWORLD_MIN_RATE
+        CardType.MASTERCARD -> calcFeeMastercard(sum, sumPerMonth)
+        CardType.VISA ->
             if (sum * FEE_VISA_MIN_RATE > FEE_VISA_MIN_SUM) sum * FEE_VISA_MIN_RATE else FEE_VISA_MIN_SUM
     }
 
@@ -43,11 +43,10 @@ fun isOverLimit(transferSum: Double, transferSumPerDay: Double, transferSumPerMo
 
 }
 
-fun calcFeeMastercard(sum: Double, sumPerMonth: Double = 0.0): Double {
-    if ((sum + sumPerMonth) > FEE_MSCARD_LIMIT) {
-        val deltaAmount = (sum + sumPerMonth) - FEE_MSCARD_LIMIT
-        return deltaAmount * FEE_MSCARD_OVER_RATE + FEE_MSCARD_OVER_MIN_SUM
-    } else {
-        return 0.0
-    }
+fun calcFeeMastercard(sum: Double, sumPerMonth: Double = 0.0): Double = when {
+    sumPerMonth > FEE_MSCARD_LIMIT -> sum * FEE_MSCARD_OVER_RATE + FEE_MSCARD_OVER_MIN_SUM
+    sum + sumPerMonth > FEE_MSCARD_LIMIT ->
+        (sum + sumPerMonth - FEE_MSCARD_LIMIT) * FEE_MSCARD_OVER_RATE + FEE_MSCARD_OVER_MIN_SUM
+
+    else -> 0.0
 }

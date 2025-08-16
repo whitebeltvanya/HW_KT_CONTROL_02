@@ -1,11 +1,5 @@
 package ru.netology
 
-enum class CARD_TYPE {
-    MASTERCARD,
-    VISA,
-    RUSWORLD
-}
-
 const val TRANSFER_LIMIT_PER_DAY = 150_000.0
 const val TRANSFER_LIMIT_PER_MONTHS = 600_000.0
 
