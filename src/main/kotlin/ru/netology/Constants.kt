@@ -1,0 +1,19 @@
+package ru.netology
+
+enum class CARD_TYPE {
+    MASTERCARD,
+    VISA,
+    RUSWORLD
+}
+
+const val TRANSFER_LIMIT_PER_DAY = 150_000.0
+const val TRANSFER_LIMIT_PER_MONTHS = 600_000.0
+
+const val FEE_MSCARD_LIMIT = 75_000.0
+const val FEE_MSCARD_OVER_RATE = 0.006
+const val FEE_MSCARD_OVER_MIN_SUM = 20.0
+
+const val FEE_VISA_MIN_RATE = 0.0075
+const val FEE_VISA_MIN_SUM = 35.00
+
+const val FEE_RUSWORLD_MIN_RATE = 0.0
