@@ -4,11 +4,6 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class MainTest {
-    @Test
-    fun main() {
-
-        assertEquals(false, false)
-    }
 
     @Test
     fun isOverLimit_test01() {
